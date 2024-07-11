@@ -1,0 +1,90 @@
+version: '3.8'
+services:
+  redis-node-1:
+    image: redis:7.2.5
+    container_name: redis-node-1
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis-data-1:/data
+      - ./redis/redis1.conf:/usr/local/etc/redis/redis.conf
+    network_mode: host
+    ports:
+      - "6380:6380"
+
+  redis-node-2:
+    image: redis:7.2.5
+    container_name: redis-node-2
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis-data-2:/data
+      - ./redis/redis2.conf:/usr/local/etc/redis/redis.conf
+    network_mode: host
+    ports:
+      - "6381:6381"
+
+  redis-node-3:
+    image: redis:7.2.5
+    container_name: redis-node-3
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis-data-3:/data
+      - ./redis/redis3.conf:/usr/local/etc/redis/redis.conf
+    network_mode: host
+    ports:
+      - "6382:6382"
+
+  redis-node-4:
+    image: redis:7.2.5
+    container_name: redis-node-4
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis-data-4:/data
+      - ./redis/redis4.conf:/usr/local/etc/redis/redis.conf
+    network_mode: host
+    ports:
+      - "6383:6383"
+
+  redis-node-5:
+    image: redis:7.2.5
+    container_name: redis-node-5
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis-data-5:/data
+      - ./redis/redis5.conf:/usr/local/etc/redis/redis.conf
+    network_mode: host
+    ports:
+      - "6384:6384"
+
+  redis-node-6:
+    image: redis:7.2.5
+    container_name: redis-node-6
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis-data-6:/data
+      - ./redis/redis6.conf:/usr/local/etc/redis/redis.conf
+    network_mode: host
+    ports:
+      - "6385:6385"
+
+  # redis-cluster-init:
+  #   image: redis:7.2.5
+  #   container_name: redis-init
+  #   entrypoint: ["/bin/sh", "-c", "/usr/local/bin/init-redis-cluster.sh"]
+  #   volumes:
+  #     - ./redis/init-redis-cluster.sh:/usr/local/bin/init-redis-cluster.sh
+  #   network_mode: host
+  #   restart: "no"
+
+volumes:
+  redis-data-1:
+    name: redis-data-1
+  redis-data-2:
+    name: redis-data-2
+  redis-data-3:
+    name: redis-data-3
+  redis-data-4:
+    name: redis-data-4
+  redis-data-5:
+    name: redis-data-5
+  redis-data-6:
+    name: redis-data-6
