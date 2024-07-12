@@ -6,10 +6,12 @@ services:
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     volumes:
       - redis-data-1:/data
-      - ./redis/redis1.conf:/usr/local/etc/redis/redis.conf
-    network_mode: host
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6380:6380"
+      - "6379:6379"
+    networks:
+      redis-cluster:
+        ipv4_address: 172.38.0.11
 
   redis-node-2:
     image: redis:7.2.5
@@ -17,10 +19,12 @@ services:
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     volumes:
       - redis-data-2:/data
-      - ./redis/redis2.conf:/usr/local/etc/redis/redis.conf
-    network_mode: host
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6381:6381"
+      - "6380:6379"
+    networks:
+      redis-cluster:
+        ipv4_address: 172.38.0.12
 
   redis-node-3:
     image: redis:7.2.5
@@ -28,10 +32,12 @@ services:
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     volumes:
       - redis-data-3:/data
-      - ./redis/redis3.conf:/usr/local/etc/redis/redis.conf
-    network_mode: host
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6382:6382"
+      - "6381:6379"
+    networks:
+      redis-cluster:
+        ipv4_address: 172.38.0.13
 
   redis-node-4:
     image: redis:7.2.5
@@ -39,10 +45,12 @@ services:
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     volumes:
       - redis-data-4:/data
-      - ./redis/redis4.conf:/usr/local/etc/redis/redis.conf
-    network_mode: host
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6383:6383"
+      - "6382:6379"
+    networks:
+      redis-cluster:
+        ipv4_address: 172.38.0.14
 
   redis-node-5:
     image: redis:7.2.5
@@ -50,10 +58,12 @@ services:
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     volumes:
       - redis-data-5:/data
-      - ./redis/redis5.conf:/usr/local/etc/redis/redis.conf
-    network_mode: host
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6384:6384"
+      - "6383:6379"
+    networks:
+      redis-cluster:
+        ipv4_address: 172.38.0.15
 
   redis-node-6:
     image: redis:7.2.5
@@ -61,10 +71,12 @@ services:
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     volumes:
       - redis-data-6:/data
-      - ./redis/redis6.conf:/usr/local/etc/redis/redis.conf
-    network_mode: host
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6385:6385"
+      - "6384:6379"
+    networks:
+      redis-cluster:
+        ipv4_address: 172.38.0.16
 
   # redis-cluster-init:
   #   image: redis:7.2.5
@@ -74,6 +86,15 @@ services:
   #     - ./redis/init-redis-cluster.sh:/usr/local/bin/init-redis-cluster.sh
   #   network_mode: host
   #   restart: "no"
+
+networks:
+  redis-cluster:
+    name: redis-cluster
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.38.0.0/16
+          gateway: 172.38.0.1
 
 volumes:
   redis-data-1:
